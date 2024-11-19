@@ -19,8 +19,15 @@ struct LoginView: View {
                            rotationAngle: 15,
                            headerBackgroundColor: Color.pink)
                 
+                
                 // LoginForm
                 Form {
+                    if !viewModel.errorMessage.isEmpty {
+                        Text(viewModel.errorMessage)
+                            .font(.headline)
+                            .foregroundColor(.red)
+                    }
+                    
                     TextField("Email Address", text: $viewModel.email)
                         .textFieldStyle(DefaultTextFieldStyle())
                         .autocapitalization(.none)
@@ -29,10 +36,13 @@ struct LoginView: View {
                     SecureField("Password", text: $viewModel.password)
                         .textFieldStyle(DefaultTextFieldStyle())
                     
-                    CustomButton(title: "Log in", background: Color.blue) {
-                        //ATTEMPT TO LOGIN
+                    CustomButton(
+                        title: "Log in",
+                        background: Color.blue
+                    ) {
+                        viewModel.login()
                     }
-
+                    
                 }.offset(y: -50)
                 
                 // Create Account
